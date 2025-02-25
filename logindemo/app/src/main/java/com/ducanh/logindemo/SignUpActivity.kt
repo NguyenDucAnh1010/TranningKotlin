@@ -74,15 +74,15 @@ class SignUpActivity : AppCompatActivity() {
 
         when {
             firstName.isEmpty() -> {
-                CommonToast(this, "First name must be not empty").showToast()
+                CommonToast(this, getString(R.string.first_name_must_be_not_empty)).showToast()
             }
 
             lastName.isEmpty() -> {
-                CommonToast(this, "Last name must be not empty").showToast()
+                CommonToast(this, getString(R.string.last_name_must_be_not_empty)).showToast()
             }
 
             !Patterns.EMAIL_ADDRESS.matcher(emailId).matches() -> {
-                CommonToast(this, "Email is not valid").showToast()
+                CommonToast(this, getString(R.string.email_is_not_valid)).showToast()
             }
 
             else -> {

@@ -13,4 +13,7 @@
     <string name="last_name">LAST NAME</string>
     <string name="create_account">Create Account</string>
     <string name="already_have_an_account">Already have an account?</string>
+    <string name="first_name_must_be_not_empty">First name must be not empty</string>
+    <string name="last_name_must_be_not_empty">Last name must be not empty</string>
+    <string name="email_is_not_valid">Email is not valid</string>
 </resources>
