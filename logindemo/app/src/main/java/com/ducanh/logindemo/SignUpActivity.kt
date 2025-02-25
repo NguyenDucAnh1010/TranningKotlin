@@ -13,16 +13,17 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.ducanh.logindemo.model.PasswordCharSequence
 import com.google.android.material.textfield.TextInputEditText
 
 class SignUpActivity : AppCompatActivity() {
-    private lateinit var signInTxt: TextView
-    private lateinit var backBtn: ImageButton
-    private lateinit var passwordEdt: TextInputEditText
-    private lateinit var firstNameEdt: TextInputEditText
-    private lateinit var lastNameEdt: TextInputEditText
-    private lateinit var emailIdEdt: TextInputEditText
-    private lateinit var createAcountBtn: AppCompatButton
+    private lateinit var txtSignIn: TextView
+    private lateinit var btnBack: ImageButton
+    private lateinit var edtPassword: TextInputEditText
+    private lateinit var edtFirstName: TextInputEditText
+    private lateinit var edtLastName: TextInputEditText
+    private lateinit var edtEmailId: TextInputEditText
+    private lateinit var btnCreateAcount: AppCompatButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,41 +35,41 @@ class SignUpActivity : AppCompatActivity() {
             insets
         }
 
-        signInTxt = findViewById(R.id.signInTxt)
-        backBtn = findViewById(R.id.backBtn)
-        passwordEdt = findViewById(R.id.passwordEdt)
-        firstNameEdt = findViewById(R.id.firstNameEdt)
-        lastNameEdt = findViewById(R.id.lastNameEdt)
-        emailIdEdt = findViewById(R.id.emailIdEdt)
-        createAcountBtn = findViewById(R.id.createAcountBtn)
+        txtSignIn = findViewById(R.id.txtSignIn)
+        btnBack = findViewById(R.id.btnBack)
+        edtPassword = findViewById(R.id.edtPassword)
+        edtFirstName = findViewById(R.id.edtFirstName)
+        edtLastName = findViewById(R.id.edtLastName)
+        edtEmailId = findViewById(R.id.edtEmailId)
+        btnCreateAcount = findViewById(R.id.btnCreateAcount)
 
-        signInTxt.setOnClickListener {
+        txtSignIn.setOnClickListener {
             Intent(this, MainActivity::class.java).apply {
                 startActivity(this)
                 finish()
             }
         }
 
-        backBtn.setOnClickListener {
+        btnBack.setOnClickListener {
             onBackPressedDispatcher.onBackPressed()
         }
 
 
-        passwordEdt.transformationMethod = object : PasswordTransformationMethod() {
+        edtPassword.transformationMethod = object : PasswordTransformationMethod() {
             override fun getTransformation(source: CharSequence, view: View?): CharSequence {
                 return PasswordCharSequence(source)
             }
         }
 
-        createAcountBtn.setOnClickListener {
+        btnCreateAcount.setOnClickListener {
             checkValidate()
         }
     }
 
     private fun checkValidate() {
-        val firstName = firstNameEdt.text.toString().trim()
-        val lastName = lastNameEdt.text.toString().trim()
-        val emailId = emailIdEdt.text.toString().trim()
+        val firstName = edtFirstName.text.toString().trim()
+        val lastName = edtLastName.text.toString().trim()
+        val emailId = edtEmailId.text.toString().trim()
 
         when {
             firstName.isEmpty() -> {

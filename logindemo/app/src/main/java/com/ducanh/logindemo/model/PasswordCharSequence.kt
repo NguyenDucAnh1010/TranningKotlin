@@ -1,4 +1,4 @@
-package com.ducanh.logindemo
+package com.ducanh.logindemo.model
 
 class PasswordCharSequence(private val source: CharSequence) : CharSequence {
     override val length: Int
