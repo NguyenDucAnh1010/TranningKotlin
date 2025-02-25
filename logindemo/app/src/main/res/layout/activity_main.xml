@@ -32,13 +32,13 @@
         android:hint="@string/email_id">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/emailIdEdt"
             style="@style/edit_text_regular_16"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textEmailAddress"
             android:paddingHorizontal="16dp"
-            android:paddingVertical="18dp"
-            android:text="smantha@mail.com" />
+            android:paddingVertical="18dp" />
     </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -55,8 +55,7 @@
             android:drawableEnd="@drawable/ic_password"
             android:inputType="textPassword"
             android:paddingHorizontal="16dp"
-            android:paddingVertical="18dp"
-            android:text="1234" />
+            android:paddingVertical="18dp" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
@@ -149,7 +148,7 @@
             android:textColor="@color/gray_200" />
 
         <TextView
-            android:id="@+id/sign_Up_Txt"
+            android:id="@+id/signUpTxt"
             style="@style/text_semi_bold_14"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -157,5 +156,4 @@
             android:text="@string/sign_up"
             android:textColor="@color/blue_400" />
     </LinearLayout>
-
 </LinearLayout>

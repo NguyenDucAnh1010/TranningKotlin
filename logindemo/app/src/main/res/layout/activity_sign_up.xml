@@ -10,6 +10,7 @@
     tools:context=".SignUpActivity">
 
     <ImageButton
+        android:id="@+id/backBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
@@ -18,121 +19,135 @@
         android:padding="10dp"
         android:src="@drawable/ic_arrow_left" />
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:src="@drawable/bg_signup" />
-
-    <TextView
-        style="@style/text_semi_bold_24"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="36dp"
-        android:layout_marginTop="28dp"
-        android:text="@string/sign_up" />
-
-    <com.google.android.material.textfield.TextInputLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="36dp"
-        android:layout_marginTop="20dp"
-        android:hint="@string/first_name">
+        android:layout_height="wrap_content">
 
-        <com.google.android.material.textfield.TextInputEditText
-            style="@style/edit_text_regular_16"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textEmailAddress"
-            android:paddingHorizontal="16dp"
-            android:paddingVertical="18dp"
-            android:text="Smantha" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="36dp"
-        android:layout_marginTop="20dp"
-        android:hint="@string/last_name">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/bg_signup" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            style="@style/edit_text_regular_16"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textEmailAddress"
-            android:paddingHorizontal="16dp"
-            android:paddingVertical="18dp"
-            android:text="Parker" />
-    </com.google.android.material.textfield.TextInputLayout>
+            <TextView
+                style="@style/text_semi_bold_24"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="36dp"
+                android:layout_marginTop="28dp"
+                android:text="@string/sign_up" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="36dp"
-        android:layout_marginTop="20dp"
-        android:hint="@string/email_id">
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="36dp"
+                android:layout_marginTop="20dp"
+                android:hint="@string/first_name">
 
-        <com.google.android.material.textfield.TextInputEditText
-            style="@style/edit_text_regular_16"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textEmailAddress"
-            android:paddingHorizontal="16dp"
-            android:paddingVertical="18dp"
-            android:text="smantha@mail.com" />
-    </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/firstNameEdt"
+                    style="@style/edit_text_regular_16"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textEmailAddress"
+                    android:paddingHorizontal="16dp"
+                    android:paddingVertical="18dp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="36dp"
+                android:layout_marginTop="20dp"
+                android:hint="@string/last_name">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/lastNameEdt"
+                    style="@style/edit_text_regular_16"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textEmailAddress"
+                    android:paddingHorizontal="16dp"
+                    android:paddingVertical="18dp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="36dp"
+                android:layout_marginTop="20dp"
+                android:hint="@string/email_id">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/emailIdEdt"
+                    style="@style/edit_text_regular_16"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textEmailAddress"
+                    android:paddingHorizontal="16dp"
+                    android:paddingVertical="18dp" />
+            </com.google.android.material.textfield.TextInputLayout>
 
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="36dp"
-        android:layout_marginTop="20dp"
-        android:hint="@string/password">
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="36dp"
+                android:layout_marginTop="20dp"
+                android:hint="@string/password">
 
-        <com.google.android.material.textfield.TextInputEditText
-            style="@style/edit_text_regular_16"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textPassword"
-            android:paddingHorizontal="16dp"
-            android:paddingVertical="18dp"
-            android:text="1234" />
-    </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/passwordEdt"
+                    style="@style/edit_text_regular_16"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword"
+                    android:paddingHorizontal="16dp"
+                    android:paddingVertical="18dp" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-    <androidx.appcompat.widget.AppCompatButton
-        style="@style/base_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="36dp"
-        android:layout_marginTop="20dp"
-        android:paddingHorizontal="16dp"
-        android:paddingVertical="18dp"
-        android:text="@string/create_account" />
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/createAcountBtn"
+                style="@style/base_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="36dp"
+                android:layout_marginTop="20dp"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="18dp"
+                android:text="@string/create_account" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginHorizontal="36dp"
-        android:layout_marginTop="18dp"
-        android:gravity="center"
-        android:orientation="horizontal">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginHorizontal="36dp"
+                android:layout_marginTop="18dp"
+                android:gravity="center"
+                android:orientation="horizontal">
 
-        <TextView
-            style="@style/text_regular_14"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/already_have_an_account"
-            android:textColor="@color/gray_200" />
+                <TextView
+                    style="@style/text_regular_14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/already_have_an_account"
+                    android:textColor="@color/gray_200" />
 
-        <TextView
-            style="@style/text_semi_bold_14"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:text="@string/sign_in"
-            android:textColor="@color/blue_400" />
-    </LinearLayout>
+                <TextView
+                    android:id="@+id/signInTxt"
+                    style="@style/text_semi_bold_14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:text="@string/sign_in"
+                    android:textColor="@color/blue_400" />
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 </LinearLayout>
