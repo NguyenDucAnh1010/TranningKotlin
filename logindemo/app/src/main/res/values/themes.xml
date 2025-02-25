@@ -60,14 +60,6 @@
 
     <style name="edit_text_regular_16" parent="text_regular_16">
         <item name="android:maxLines">1</item>
-        <item name="android:background">@drawable/bg_text_input</item>
-    </style>
-
-    <style name="bg_text_medium_12" parent="text_medium_12">
-        <item name="android:layout_marginLeft">14dp</item>
-        <item name="android:layout_marginTop">14dp</item>
-        <item name="android:paddingHorizontal">8dp</item>
-        <item name="android:textColor">@color/gray_600</item>
-        <item name="background">@color/white</item>
+<!--        <item name="background">@drawable/bg_text_input</item>-->
     </style>
 </resources>
