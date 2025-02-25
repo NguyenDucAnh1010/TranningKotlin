@@ -61,11 +61,11 @@ class SignUpActivity : AppCompatActivity() {
         }
 
         createAcountBtn.setOnClickListener {
-            checkValid()
+            checkValidate()
         }
     }
 
-    private fun checkValid() {
+    private fun checkValidate() {
         val firstName = firstNameEdt.text.toString().trim()
         val lastName = lastNameEdt.text.toString().trim()
         val emailId = emailIdEdt.text.toString().trim()
