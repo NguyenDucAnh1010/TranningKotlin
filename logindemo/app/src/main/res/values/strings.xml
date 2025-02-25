@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">logindemo</string>
+
+    <string name="login">Login</string>
+    <string name="email_id">EMAIL ID</string>
+    <string name="password">PASSWORD</string>
+    <string name="forget_password">Forget Password?</string>
+    <string name="or">Or</string>
+    <string name="dont_have_an_account">Don’t have an account?</string>
+    <string name="sign_up">Sign Up</string>
+</resources>
