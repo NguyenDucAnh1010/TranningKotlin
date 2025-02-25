@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.ducanh.logindemo.model.CommonToast
 import com.ducanh.logindemo.model.PasswordCharSequence
 import com.google.android.material.textfield.TextInputEditText
 
@@ -73,19 +74,19 @@ class SignUpActivity : AppCompatActivity() {
 
         when {
             firstName.isEmpty() -> {
-                Toast.makeText(this, "First name must be not empty", Toast.LENGTH_SHORT).show()
+                CommonToast(this, "First name must be not empty").showToast()
             }
 
             lastName.isEmpty() -> {
-                Toast.makeText(this, "First name must be not empty", Toast.LENGTH_SHORT).show()
+                CommonToast(this, "Last name must be not empty").showToast()
             }
 
             !Patterns.EMAIL_ADDRESS.matcher(emailId).matches() -> {
-                Toast.makeText(this, "Email is not valid", Toast.LENGTH_SHORT).show()
+                CommonToast(this, "Email is not valid").showToast()
             }
 
             else -> {
-                Toast.makeText(this, "Create Account Success!", Toast.LENGTH_SHORT).show()
+                CommonToast(this, "Create Account Success!").showToast()
                 Intent(this, MainActivity::class.java).apply {
                     putExtra("email", emailId)
                     startActivity(this)
