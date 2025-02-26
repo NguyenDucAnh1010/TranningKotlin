@@ -16,7 +16,7 @@
             android:id="@+id/ivBackground"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scaleType="fitXY"
+            android:scaleType="centerCrop"
             android:src="@drawable/bg_menu_stories_1" />
     </com.google.android.material.card.MaterialCardView>
 
