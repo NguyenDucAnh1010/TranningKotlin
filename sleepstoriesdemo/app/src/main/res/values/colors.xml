@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="background">#03174C</color>
+
+    <color name="bluegrey_900">#263238</color>
+    <color name="indigo_900">#1a237e</color>
+
+    <color name="indigo_a200">#8c9eff</color>
+
+    <color name="blueGrey_500">#607d8b</color>
+    <color name="blueGrey_600">#546e7a</color>
+    
+    <color name="yellow_300">#fff176</color>
+    <color name="yellow_200">#fff59d</color>
+</resources>
