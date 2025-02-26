@@ -17,8 +17,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="fitXY"
-            app:cardCornerRadius="10dp"
-            android:src="@drawable/bg_menu_stories_1" />
+            android:src="@drawable/bg_menu_stories_1"
+            app:cardCornerRadius="10dp" />
     </androidx.cardview.widget.CardView>
 
     <TextView

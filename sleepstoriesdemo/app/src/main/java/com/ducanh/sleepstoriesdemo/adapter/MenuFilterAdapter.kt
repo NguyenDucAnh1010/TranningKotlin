@@ -10,14 +10,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ducanh.sleepstoriesdemo.R
 import com.ducanh.sleepstoriesdemo.model.ItemMenuFilter
 
-class MenuFilterAdapter(private val items: List<ItemMenuFilter>) : RecyclerView.Adapter<MenuFilterAdapter.ViewHolder>() {
+class MenuFilterAdapter(private val items: List<ItemMenuFilter>) :
+    RecyclerView.Adapter<MenuFilterAdapter.ViewHolder>() {
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val ibIcon: ImageButton = itemView.findViewById(R.id.ibIcon)
         val txtTilte: TextView = itemView.findViewById(R.id.txtTilte)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_menu_filter, parent, false)
+        val view =
+            LayoutInflater.from(parent.context).inflate(R.layout.item_menu_filter, parent, false)
         return ViewHolder(view)
     }
 
