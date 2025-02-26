@@ -3,6 +3,10 @@
     <string name="sleep_stories">Sleep Stories</string>
     <string name="drc_sleep_stories">Soothing bedtime stories to help you fall into a deep and natural sleep</string>
     <string name="the_ocean_moon">The ocean moon</string>
+    <string name="all">All</string>
     <string name="drc_the_ocean_moon">Non-stop 8- hour mixes of our most popular sleep audio</string>
     <string name="start">START</string>
+    <string name="night_island">Night Island</string>
+    <string name="time">45 MIN</string>
+    <string name="sleep_music">SLEEP MUSIC</string>
 </resources>
