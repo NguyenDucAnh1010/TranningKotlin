@@ -7,10 +7,13 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ducanh.roomdemo.R
+import com.ducanh.roomdemo.data.model.Task
 import com.ducanh.roomdemo.data.model.User
+import com.ducanh.roomdemo.data.model.UserWithTasks
 import com.ducanh.roomdemo.data.repository.UserRepositoryImpl
 import com.ducanh.roomdemo.data.room.UserDatabase
 import com.ducanh.roomdemo.databinding.ActivityMainBinding
+import com.ducanh.roomdemo.presentation.Task.TaskFragment
 
 class MainActivity : AppCompatActivity(), OnUserClickListener {
     private lateinit var userDatabase: UserDatabase
@@ -51,7 +54,7 @@ class MainActivity : AppCompatActivity(), OnUserClickListener {
                 val age = ageText.toString().toIntOrNull()
                 if (age != null) {
                     val user = User(name = name.toString(), age = age)
-                    viewModel.insert(user)
+                    viewModel.addUser(user)
                 }
             }
         }
@@ -90,21 +93,29 @@ class MainActivity : AppCompatActivity(), OnUserClickListener {
     private fun initListener() {
         userDatabase = UserDatabase.getDatabase(this)!!
 
-        val repository = UserRepositoryImpl(userDatabase.userDao())
+        val repository = UserRepositoryImpl(userDatabase.userDao(),userDatabase.taskDao())
 
         viewModel = MainViewModel(repository)
 
-        viewModel.users.observe(this) {
+        viewModel.userWithTasks.observe(this) {
             usersAdapter = UsersAdapter(it, this)
             binding.rvUsers.adapter = usersAdapter
         }
 
-        viewModel.getAllUsers()
+        viewModel.getUsersWithTasks()
     }
 
-    override fun onUserClick(user: User) {
-        binding.edtId.setText(user.id.toString())
-        binding.edtName.setText(user.name)
-        binding.edtAge.setText(user.age.toString())
+    override fun onUserClick(userWithTasks: UserWithTasks) {
+        binding.edtId.setText(userWithTasks.user.id.toString())
+        binding.edtName.setText(userWithTasks.user.name)
+        binding.edtAge.setText(userWithTasks.user.age.toString())
+    }
+
+    override fun onDetailButtonClick(userWithTasks: UserWithTasks) {
+        val fragment = TaskFragment.newInstance(userWithTasks)
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.main, fragment)
+            .addToBackStack(null)
+            .commit()
     }
 }

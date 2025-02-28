@@ -6,7 +6,7 @@
 
         <variable
             name="item"
-            type="com.ducanh.roomdemo.data.model.UserWithTasks" />
+            type="com.ducanh.roomdemo.data.model.Task" />
     </data>
 
     <LinearLayout
@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="12dp"
             android:layout_gravity="center"
-            android:text="@{String.valueOf(item.user.id)}"
+            android:text="@{String.valueOf(item.id)}"
             tools:text="id" />
 
         <TextView
@@ -31,7 +31,7 @@
             android:layout_margin="12dp"
             android:layout_weight="1"
             android:layout_gravity="center"
-            android:text="@{item.user.name}"
+            android:text="@{item.taskName}"
             tools:text="name" />
 
         <TextView
@@ -41,15 +41,7 @@
             android:layout_margin="12dp"
             android:gravity="start"
             android:layout_gravity="center"
-            android:text="@{String.valueOf(item.user.age)}"
+            android:text="@{String.valueOf(item.isCompleted)}"
             tools:text="age" />
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnDetail"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/see"
-            android:textColor="@color/white"
-            android:background="@color/black"/>
     </LinearLayout>
 </layout>
