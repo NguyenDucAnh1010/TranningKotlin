@@ -31,4 +31,8 @@ class UserRepositoryImpl(private val userDao: UserDao,private val taskDao: TaskD
     override fun getUsersWithTasks(): List<UserWithTasks> {
         return userDao.getUsersWithTasks()
     }
+
+    override fun getTasksByUserId(userId: Int): List<Task> {
+        return taskDao.getTasksByUserId(userId)
+    }
 }
