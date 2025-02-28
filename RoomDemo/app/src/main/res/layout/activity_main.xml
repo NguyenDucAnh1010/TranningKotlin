@@ -7,14 +7,31 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:background="@color/white"
         tools:context=".presentation.MainActivity">
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
+            android:background="@color/white"
             android:layout_marginTop="12dp"
-            android:hint="Name">
+            android:hint="@string/id">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edtId"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:background="@color/white"
+            android:layout_marginTop="12dp"
+            android:hint="name">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edtName"
@@ -26,13 +43,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
+            android:background="@color/white"
             android:layout_marginTop="12dp"
-            android:hint="Age">
+            android:hint="@string/age">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edtAge"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:inputType="number"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <androidx.appcompat.widget.AppCompatButton
@@ -42,7 +61,27 @@
             android:layout_marginHorizontal="20dp"
             android:layout_marginTop="12dp"
             android:background="@color/black"
-            android:text="Create New"
+            android:text="@string/create_new"
+            android:textColor="@color/white" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnUpate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="12dp"
+            android:background="@color/orange_500"
+            android:text="Upate"
+            android:textColor="@color/white" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnDelete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="12dp"
+            android:background="@color/red_500"
+            android:text="@string/delete"
             android:textColor="@color/white" />
 
         <androidx.recyclerview.widget.RecyclerView

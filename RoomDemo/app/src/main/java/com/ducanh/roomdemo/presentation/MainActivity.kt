@@ -1,26 +1,24 @@
 package com.ducanh.roomdemo.presentation
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ducanh.roomdemo.R
 import com.ducanh.roomdemo.data.model.User
+import com.ducanh.roomdemo.data.repository.UserRepositoryImpl
 import com.ducanh.roomdemo.data.room.UserDatabase
 import com.ducanh.roomdemo.databinding.ActivityMainBinding
-import kotlinx.coroutines.launch
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), OnUserClickListener {
     private lateinit var userDatabase: UserDatabase
     private lateinit var usersAdapter: UsersAdapter
 
     private lateinit var binding: ActivityMainBinding
 
-//    private val viewModel by viewModels<MainViewModel>()
+    private lateinit var viewModel: MainViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,26 +42,69 @@ class MainActivity : AppCompatActivity() {
     private fun initView() {
         binding.rvUsers.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+
+        binding.btnCreateNew.setOnClickListener {
+            val name = binding.edtName.text ?: ""
+            val ageText = binding.edtAge.text ?: ""
+
+            if (name.isNotEmpty() && ageText.isNotEmpty()) {
+                val age = ageText.toString().toIntOrNull()
+                if (age != null) {
+                    val user = User(name = name.toString(), age = age)
+                    viewModel.insert(user)
+                }
+            }
+        }
+
+        binding.btnUpate.setOnClickListener {
+            val idText = binding.edtId.text ?: ""
+            val name = binding.edtName.text ?: ""
+            val ageText = binding.edtAge.text ?: ""
+
+            if (idText.isNotEmpty() && name.isNotEmpty() && ageText.isNotEmpty()) {
+                val id = idText.toString().toIntOrNull()
+                val age = ageText.toString().toIntOrNull()
+                if (id != null && age != null) {
+                    val user = User(id = id, name = name.toString(), age = age)
+                    viewModel.updateUser(user)
+                }
+            }
+        }
+
+        binding.btnDelete.setOnClickListener {
+            val idText = binding.edtId.text ?: ""
+            val name = binding.edtName.text ?: ""
+            val ageText = binding.edtAge.text ?: ""
+
+            if (idText.isNotEmpty() && name.isNotEmpty() && ageText.isNotEmpty()) {
+                val id = idText.toString().toIntOrNull()
+                val age = ageText.toString().toIntOrNull()
+                if (id != null && age != null) {
+                    val user = User(id = id, name = name.toString(), age = age)
+                    viewModel.deleteUser(user)
+                }
+            }
+        }
     }
 
     private fun initListener() {
-//        val repository: UserRepositoryImpl = UserRepositoryImpl(getDatabase(this).userDao())
-//        userViewModel = MainViewModel(repository)
-//
-//        userViewModel.users.observe(this) {
-//            usersAdapter = UsersAdapter(it)
-//            binding.rvUsers.adapter = usersAdapter
-//        }
-//
-//        userViewModel.insert(User(name = "John Doe", age = 25))
-
         userDatabase = UserDatabase.getDatabase(this)!!
 
-        val user = User(name = "Nguyễn Văn A", age = 30)
-        userDatabase.userDao().insert(user)
+        val repository = UserRepositoryImpl(userDatabase.userDao())
 
-        val users = userDatabase.userDao().getAllUsers()
-        usersAdapter = UsersAdapter(users)
-        binding.rvUsers.adapter = usersAdapter
+        viewModel = MainViewModel(repository)
+
+        viewModel.users.observe(this) {
+            usersAdapter = UsersAdapter(it, this)
+            binding.rvUsers.adapter = usersAdapter
+        }
+
+        viewModel.getAllUsers()
+    }
+
+    override fun onUserClick(user: User) {
+        binding.edtId.setText(user.id.toString())
+        binding.edtName.setText(user.name)
+        binding.edtAge.setText(user.age.toString())
     }
 }

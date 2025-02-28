@@ -11,4 +11,12 @@ class UserRepositoryImpl(private val userDao: UserDao) : UserRepository {
     override fun getAllUsers(): List<User> {
         return userDao.getAllUsers()
     }
+
+    override fun updateUser(user: User) {
+        userDao.updateUser(user)
+    }
+
+    override fun deleteUser(user: User) {
+        userDao.deleteUser(user)
+    }
 }

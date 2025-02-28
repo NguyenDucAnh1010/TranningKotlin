@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">RoomDemo</string>
+
+    <string name="id">ID</string>
+    <string name="name">NAME</string>
+    <string name="age">AGE</string>
+    <string name="create_new">Create New</string>
+    <string name="upate">Upate</string>
+    <string name="delete">Delete</string>
 </resources>

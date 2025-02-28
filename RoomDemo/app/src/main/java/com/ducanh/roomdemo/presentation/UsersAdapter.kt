@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ducanh.roomdemo.data.model.User
 import com.ducanh.roomdemo.databinding.ItemUserBinding
 
-class UsersAdapter(private val items: List<User>) :
+class UsersAdapter(private val items: List<User>,private val listener: OnUserClickListener) :
     RecyclerView.Adapter<UsersAdapter.ViewHolder>() {
     class ViewHolder(var binding: ItemUserBinding) : RecyclerView.ViewHolder(binding.root)
 
@@ -23,6 +23,10 @@ class UsersAdapter(private val items: List<User>) :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = items[position]
         holder.binding.item = item
+
+        holder.itemView.setOnClickListener {
+            listener.onUserClick(item)
+        }
     }
 
     override fun getItemCount(): Int = items.size

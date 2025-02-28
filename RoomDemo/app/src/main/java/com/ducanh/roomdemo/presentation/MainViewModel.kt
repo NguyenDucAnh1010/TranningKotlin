@@ -3,10 +3,8 @@ package com.ducanh.roomdemo.presentation
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.ducanh.roomdemo.data.model.User
 import com.ducanh.roomdemo.data.repository.UserRepositoryImpl
-import kotlinx.coroutines.launch
 
 class MainViewModel(private val repository: UserRepositoryImpl) : ViewModel() {
     private val _users = MutableLiveData<List<User>>(listOf())
@@ -18,6 +16,18 @@ class MainViewModel(private val repository: UserRepositoryImpl) : ViewModel() {
     }
 
     fun getAllUsers() {
-        _users.postValue(repository.getAllUsers())
+        repository.getAllUsers().also {
+            _users.postValue(it)
+        }
+    }
+
+    fun updateUser(user: User){
+        repository.updateUser(user)
+        getAllUsers()
+    }
+
+    fun deleteUser(user: User){
+        repository.deleteUser(user)
+        getAllUsers()
     }
 }
