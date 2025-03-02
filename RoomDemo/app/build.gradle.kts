@@ -48,6 +48,7 @@ dependencies {
     implementation(libs.androidx.constraintlayout)
     implementation("androidx.room:room-runtime:2.5.2")
     implementation("androidx.room:room-paging:2.6.1")
+    implementation("androidx.fragment:fragment-ktx:1.6.2")
     implementation(libs.androidx.paging.runtime.ktx)
     kapt("androidx.room:room-compiler:2.5.2")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")

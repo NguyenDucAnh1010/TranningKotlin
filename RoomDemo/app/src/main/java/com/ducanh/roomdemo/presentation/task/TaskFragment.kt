@@ -5,13 +5,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.ducanh.roomdemo.data.dao.TaskDao
 import com.ducanh.roomdemo.data.model.Task
 import com.ducanh.roomdemo.data.model.UserWithTasks
-import com.ducanh.roomdemo.data.repository.TaskRepositoryImpl
 import com.ducanh.roomdemo.data.room.UserDatabase
 import com.ducanh.roomdemo.databinding.FragmentTaskBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -31,8 +35,11 @@ class TaskFragment(private var userWithTasks: UserWithTasks) : Fragment() {
     private var _binding: FragmentTaskBinding? = null
     private val binding get() = _binding!!
     private lateinit var taskAdapter: TaskAdapter
-    private lateinit var userDatabase: UserDatabase
-    private lateinit var viewModel: TaskViewModel
+//    private lateinit var userDatabase: UserDatabase
+//    private lateinit var viewModel: TaskViewModel
+
+    private lateinit var dao: TaskDao
+    private val viewModel: TaskViewModel by viewModels { TaskViewModelFactory(userWithTasks.user.id, dao) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -77,7 +84,8 @@ class TaskFragment(private var userWithTasks: UserWithTasks) : Fragment() {
                     if (choice != null) {
                         val task =
                             Task(userId = userId, taskName = name.toString(), isCompleted = choice)
-                        viewModel.addTask(task, userId)
+                        viewModel.addTask(task)
+                        taskAdapter.refresh()
                     }
                 }
             }
@@ -86,18 +94,31 @@ class TaskFragment(private var userWithTasks: UserWithTasks) : Fragment() {
         binding.rvTasks.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
 
-        userDatabase = UserDatabase.getDatabase(requireContext())!!
+//        userDatabase = UserDatabase.getDatabase(requireContext())!!
+//
+//        val repository = TaskRepositoryImpl(userDatabase.taskDao())
+//
+//        viewModel = TaskViewModel(repository)
+//
+//        viewModel.tasks.observe(requireActivity()) {
+//            taskAdapter = TaskAdapter(it)
+//            binding.rvTasks.adapter = taskAdapter
+//        }
+//
+//        viewModel.getTasksByUserId(userId)
 
-        val repository = TaskRepositoryImpl(userDatabase.taskDao())
+        dao = UserDatabase.getDatabase(requireContext())!!.taskDao()
 
-        viewModel = TaskViewModel(repository)
+        taskAdapter = TaskAdapter(userWithTasks.tasks)
+        binding.rvTasks.adapter = taskAdapter.withLoadStateFooter(
+            TaskLoadStateAdapter()
+        )
 
-        viewModel.tasks.observe(requireActivity()) {
-            taskAdapter = TaskAdapter(it)
-            binding.rvTasks.adapter = taskAdapter
+        lifecycleScope.launch {
+            viewModel.data.collectLatest {
+                taskAdapter.submitData(it)
+            }
         }
-
-        viewModel.getTasksByUserId(userId)
 
         return binding.root
     }

@@ -11,4 +11,14 @@ class TaskRepositoryImpl(private val taskDao: TaskDao) : TaskRepository {
     override fun getTasksByUserId(userId: Int): List<Task> {
         return taskDao.getTasksByUserId(userId)
     }
+
+//    override fun getTasksByUserIdPaged(userId: Int, keyword: String?): Flow<PagingData<Task>> {
+//        return Pager(
+//            config = PagingConfig(
+//                pageSize = 20,
+//                enablePlaceholders = false
+//            ),
+//            pagingSourceFactory = { taskDao.getTasksByUserIdPaged(userId, keyword) }
+//        ).flow
+//    }
 }
