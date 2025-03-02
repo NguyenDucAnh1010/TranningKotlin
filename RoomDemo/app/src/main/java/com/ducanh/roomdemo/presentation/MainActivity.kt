@@ -7,13 +7,12 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ducanh.roomdemo.R
-import com.ducanh.roomdemo.data.model.Task
 import com.ducanh.roomdemo.data.model.User
 import com.ducanh.roomdemo.data.model.UserWithTasks
 import com.ducanh.roomdemo.data.repository.UserRepositoryImpl
 import com.ducanh.roomdemo.data.room.UserDatabase
 import com.ducanh.roomdemo.databinding.ActivityMainBinding
-import com.ducanh.roomdemo.presentation.Task.TaskFragment
+import com.ducanh.roomdemo.presentation.task.TaskFragment
 
 class MainActivity : AppCompatActivity(), OnUserClickListener {
     private lateinit var userDatabase: UserDatabase
@@ -93,7 +92,7 @@ class MainActivity : AppCompatActivity(), OnUserClickListener {
     private fun initListener() {
         userDatabase = UserDatabase.getDatabase(this)!!
 
-        val repository = UserRepositoryImpl(userDatabase.userDao(),userDatabase.taskDao())
+        val repository = UserRepositoryImpl(userDatabase.userDao())
 
         viewModel = MainViewModel(repository)
 

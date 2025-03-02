@@ -1,12 +1,10 @@
-package com.ducanh.roomdemo.presentation.Task
+package com.ducanh.roomdemo.presentation.task
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.ducanh.roomdemo.data.model.Task
-import com.ducanh.roomdemo.data.model.UserWithTasks
 import com.ducanh.roomdemo.databinding.ItemTaskBinding
-import com.ducanh.roomdemo.databinding.ItemUserBinding
 
 class TaskAdapter(private val items: List<Task>) :
     RecyclerView.Adapter<TaskAdapter.ViewHolder>() {

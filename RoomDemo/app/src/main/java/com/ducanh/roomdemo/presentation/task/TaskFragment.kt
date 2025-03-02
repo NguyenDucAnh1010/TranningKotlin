@@ -1,19 +1,16 @@
-package com.ducanh.roomdemo.presentation.Task
+package com.ducanh.roomdemo.presentation.task
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.ducanh.roomdemo.R
 import com.ducanh.roomdemo.data.model.Task
 import com.ducanh.roomdemo.data.model.UserWithTasks
-import com.ducanh.roomdemo.data.repository.UserRepositoryImpl
+import com.ducanh.roomdemo.data.repository.TaskRepositoryImpl
 import com.ducanh.roomdemo.data.room.UserDatabase
 import com.ducanh.roomdemo.databinding.FragmentTaskBinding
-import com.ducanh.roomdemo.presentation.MainViewModel
-import com.ducanh.roomdemo.presentation.UsersAdapter
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 // TODO: Rename parameter arguments, choose names that match
@@ -48,7 +45,7 @@ class TaskFragment(private var userWithTasks: UserWithTasks) : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         _binding = FragmentTaskBinding.inflate(inflater, container, false)
 
@@ -56,7 +53,7 @@ class TaskFragment(private var userWithTasks: UserWithTasks) : Fragment() {
         binding.edtUserId.setText(userId.toString())
 
         binding.edtChoice.setOnClickListener {
-            val options = arrayOf("True", "False")
+            val options = arrayOf("true", "false")
 
             MaterialAlertDialogBuilder(requireContext())
                 .setTitle("Chọn giá trị")
@@ -71,8 +68,19 @@ class TaskFragment(private var userWithTasks: UserWithTasks) : Fragment() {
         }
 
         binding.btnCreateNew.setOnClickListener {
-            val task = Task(userId = userId, taskName = "anhzao", isCompleted = true)
-            viewModel.addTask(task,userId)
+            binding.btnCreateNew.setOnClickListener {
+                val name = binding.edtName.text ?: ""
+                val choiceTxt = binding.edtChoice.text ?: ""
+
+                if (name.isNotEmpty() && choiceTxt.isNotEmpty()) {
+                    val choice = choiceTxt.toString().toBooleanStrictOrNull()
+                    if (choice != null) {
+                        val task =
+                            Task(userId = userId, taskName = name.toString(), isCompleted = choice)
+                        viewModel.addTask(task, userId)
+                    }
+                }
+            }
         }
 
         binding.rvTasks.layoutManager =
@@ -80,7 +88,7 @@ class TaskFragment(private var userWithTasks: UserWithTasks) : Fragment() {
 
         userDatabase = UserDatabase.getDatabase(requireContext())!!
 
-        val repository = UserRepositoryImpl(userDatabase.userDao(),userDatabase.taskDao())
+        val repository = TaskRepositoryImpl(userDatabase.taskDao())
 
         viewModel = TaskViewModel(repository)
 

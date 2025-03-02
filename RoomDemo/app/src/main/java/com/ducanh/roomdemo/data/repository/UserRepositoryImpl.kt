@@ -6,7 +6,7 @@ import com.ducanh.roomdemo.data.model.Task
 import com.ducanh.roomdemo.data.model.User
 import com.ducanh.roomdemo.data.model.UserWithTasks
 
-class UserRepositoryImpl(private val userDao: UserDao,private val taskDao: TaskDao) : UserRepository {
+class UserRepositoryImpl(private val userDao: UserDao) : UserRepository {
     override fun insertUser(user: User) {
 //        userDao.insert(user)
         userDao.insertUser(user)
@@ -24,15 +24,7 @@ class UserRepositoryImpl(private val userDao: UserDao,private val taskDao: TaskD
         userDao.deleteUser(user)
     }
 
-    override fun insertTask(task: Task) {
-        taskDao.insertTask(task)
-    }
-
     override fun getUsersWithTasks(): List<UserWithTasks> {
         return userDao.getUsersWithTasks()
-    }
-
-    override fun getTasksByUserId(userId: Int): List<Task> {
-        return taskDao.getTasksByUserId(userId)
     }
 }

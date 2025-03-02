@@ -6,7 +6,7 @@
         android:layout_height="match_parent"
         android:background="@color/white"
         android:orientation="vertical"
-        tools:context=".presentation.Task.TaskFragment">
+        tools:context=".presentation.task.TaskFragment">
 
         <ImageButton
             android:id="@+id/ibBack"
@@ -88,25 +88,25 @@
             android:text="@string/create_new"
             android:textColor="@color/white" />
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnUpate"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="20dp"
-            android:layout_marginTop="12dp"
-            android:background="@color/orange_500"
-            android:text="Upate"
-            android:textColor="@color/white" />
+<!--        <androidx.appcompat.widget.AppCompatButton-->
+<!--            android:id="@+id/btnUpate"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginHorizontal="20dp"-->
+<!--            android:layout_marginTop="12dp"-->
+<!--            android:background="@color/orange_500"-->
+<!--            android:text="Upate"-->
+<!--            android:textColor="@color/white" />-->
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnDelete"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="20dp"
-            android:layout_marginTop="12dp"
-            android:background="@color/red_500"
-            android:text="@string/delete"
-            android:textColor="@color/white" />
+<!--        <androidx.appcompat.widget.AppCompatButton-->
+<!--            android:id="@+id/btnDelete"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginHorizontal="20dp"-->
+<!--            android:layout_marginTop="12dp"-->
+<!--            android:background="@color/red_500"-->
+<!--            android:text="@string/delete"-->
+<!--            android:textColor="@color/white" />-->
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvTasks"
