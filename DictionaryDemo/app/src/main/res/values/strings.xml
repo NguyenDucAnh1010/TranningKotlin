@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">DictionaryDemo</string>
+
+    <string name="dictionary">Dictionary</string>
+    <string name="favorite">Favorite</string>
+    <string name="favorites">Favorites</string>
+    <string name="game">Game</string>
+    <string name="detail">Detail</string>
+    <string name="settings">Settings</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="action_bar_search">Search something...</string>
+
+    <string name="configuration_of_speed_speak">Configuration of speed speak</string>
+    <string name="configuration_of_font_size">Configuration of font size</string>
+    <string name="share_application">Share application</string>
+
+    <string name="settings_speed">Speed: x%1$s</string>
+    <string name="small">Small</string>
+    <string name="normal">Normal</string>
+    <string name="large">Large</string>
+    <string name="extra_large">Extra large</string>
+    <string name="hello_world">Hello World</string>
+</resources>

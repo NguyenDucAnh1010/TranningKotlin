@@ -1,0 +1,46 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.DictionaryDemo" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Customize your light theme here. -->
+        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+    </style>
+
+    <style name="Theme.DictionaryDemo" parent="Base.Theme.DictionaryDemo" />
+
+    <style name="BottomMenuStyle" parent="Widget.MaterialComponents.BottomNavigationView">
+        <item name="itemIconTint">@color/bottom_menu_selection</item>
+        <item name="itemTextColor">@color/bottom_menu_selection</item>
+        <item name="backgroundTint">@color/white</item>
+    </style>
+
+    <style name="base_font">
+        <item name="android:textColor">@color/red_400</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="font_bold" parent="base_font">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="font_normal" parent="base_font">
+        <item name="android:textStyle">normal</item>
+    </style>
+
+    <style name="title_font" parent="font_bold">
+        <item name="android:textSize">22sp</item>
+    </style>
+
+    <style name="tv_word" parent="font_bold">
+        <item name="android:textSize">19sp</item>
+    </style>
+
+    <style name="tv_mean" parent="font_normal">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/tv_mean</item>
+    </style>
+
+    <style name="tv_settings" parent="font_normal">
+        <item name="android:textSize">19sp</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+</resources>

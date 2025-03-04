@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <color name="tv_word">#4CAF50</color>
+    <color name="tv_mean">#252525</color>
+
+    <color name="app_bar">#59AF5C</color>
+    <color name="seekbar_progress">#8BED8F</color>
+
+    <color name="transparent">#80000000</color>
+    <color name="gray">#727272</color>
+
+    <color name="grey_600">#757575</color>
+
+    <color name="btn_case_answer">#F0F0F0</color>
+    <color name="tv_case_answer">#252525</color>
+
+    <color name="red_50">#ffebee</color>
+    <color name="red_100">#ffcdd2</color>
+    <color name="red_200">#ef9a9a</color>
+    <color name="red_300">#e57373</color>
+    <color name="red_400">#ef5350</color>
+    <color name="red_500">#f44336</color>
+    <color name="red_600">#e53935</color>
+    <color name="red_700">#d32f2f</color>
+    <color name="red_800">#c62828</color>
+    <color name="red_900">#b71c1c</color>
+    <color name="red_a100">#ff8a80</color>
+    <color name="red_a200">#ff5252</color>
+    <color name="red_a400">#ff1744</color>
+    <color name="red_a700">#d50000</color>
+
+</resources>
