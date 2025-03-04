@@ -26,9 +26,9 @@ class WordAdapter(private val items: List<Word>, private val listener: OnDiction
         val item = items[position]
         holder.binding.item = item
 
-        if (item.isFavorite){
-            holder.binding.btnFavorite.setImageResource(R.drawable.ic_select_favorite)
-        }
+//        if (item.isFavorite){
+//            holder.binding.btnFavorite.setImageResource(R.drawable.ic_select_favorite)
+//        }
 
         holder.itemView.setOnClickListener {
             listener.onWordClick(item)

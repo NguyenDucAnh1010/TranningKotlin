@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 import com.ducanh.dictionarydemo.data.dao.WordDao
 import com.ducanh.dictionarydemo.data.entity.Word
 
-@Database(entities = [Word::class], version = 1)
+@Database(entities = [Word::class], version = 7)
 abstract class DictionaryDatabase : RoomDatabase() {
     abstract fun wordDao(): WordDao
 
@@ -19,8 +19,10 @@ abstract class DictionaryDatabase : RoomDatabase() {
                 synchronized(DictionaryDatabase::class) {
                     INSTANCE = Room.databaseBuilder(
                         context.applicationContext,
-                        DictionaryDatabase::class.java, "dictionary_db.db"
+                        DictionaryDatabase::class.java, "room.db"
                     ).allowMainThreadQueries()
+                        .createFromAsset("dictionary_db.db")
+                        .fallbackToDestructiveMigration()
                         .build()
                 }
             }

@@ -6,15 +6,19 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ducanh.dictionarydemo.R
+import com.ducanh.dictionarydemo.data.dao.WordDao
 import com.ducanh.dictionarydemo.data.entity.Word
 import com.ducanh.dictionarydemo.databinding.FragmentDictionaryBinding
+import com.ducanh.dictionarydemo.presentation.repository.DictionaryRepositoryImpl
 import com.ducanh.dictionarydemo.ui.adapter.OnDictionaryClickListener
 import com.ducanh.dictionarydemo.ui.fragment.detail.DetailFragment
 import com.ducanh.dictionarydemo.ui.viewmodel.DictionaryViewModel
+import com.ducanh.dictionarydemo.ui.viewmodel.DictionaryViewModelFactory
+import com.example.androidtraining2.data.local.DictionaryDatabase
 import com.example.androidtraining2.ui.adapter.WordAdapter
-import dagger.hilt.android.AndroidEntryPoint
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -27,7 +31,6 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 
-@AndroidEntryPoint
 class DictionaryFragment : Fragment(), OnDictionaryClickListener {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
@@ -44,7 +47,14 @@ class DictionaryFragment : Fragment(), OnDictionaryClickListener {
     private var _binding: FragmentDictionaryBinding? = null
     private val binding get() = _binding!!
 
-    private val dictionaryViewModel: DictionaryViewModel by activityViewModels()
+    private val viewModel by viewModels<DictionaryViewModel> {
+        DictionaryViewModelFactory(
+            DictionaryRepositoryImpl(
+                DictionaryDatabase.getDatabase(requireContext())!!
+                    .wordDao()
+            )
+        )
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -55,11 +65,13 @@ class DictionaryFragment : Fragment(), OnDictionaryClickListener {
         binding.rvWords.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
 
-        dictionaryViewModel.words.observe(viewLifecycleOwner) {
-            binding.rvWords.adapter = WordAdapter(it, this)
+
+        viewModel.words.observe(viewLifecycleOwner) {
+            val wordAdapter = WordAdapter(it, this)
+            binding.rvWords.adapter = wordAdapter
         }
 
-        dictionaryViewModel.getAllWord()
+        viewModel.getAllWord()
 
         return binding.root
     }

@@ -13,9 +13,7 @@ import com.ducanh.dictionarydemo.ui.fragment.dictionary.DictionaryFragment
 import com.ducanh.dictionarydemo.ui.fragment.favorite.FavoriteFragment
 import com.ducanh.dictionarydemo.ui.fragment.game.GameFragment
 import com.ducanh.dictionarydemo.ui.fragment.settings.SettingsFragment
-import dagger.hilt.android.AndroidEntryPoint
 
-@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
@@ -34,9 +32,6 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-
-//        val dbHelper = DatabaseHelper(this)
-//        dbHelper.copyDatabase()
 
         replaceFragment(DictionaryFragment())
 

@@ -5,12 +5,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ducanh.dictionarydemo.R
 import com.ducanh.dictionarydemo.data.entity.Word
 import com.ducanh.dictionarydemo.databinding.FragmentFavoriteBinding
+import com.ducanh.dictionarydemo.presentation.repository.DictionaryRepositoryImpl
 import com.ducanh.dictionarydemo.ui.adapter.OnDictionaryClickListener
 import com.ducanh.dictionarydemo.ui.fragment.detail.DetailFragment
+import com.ducanh.dictionarydemo.ui.viewmodel.DictionaryViewModel
+import com.ducanh.dictionarydemo.ui.viewmodel.DictionaryViewModelFactory
+import com.example.androidtraining2.data.local.DictionaryDatabase
 import com.example.androidtraining2.ui.adapter.WordAdapter
 
 // TODO: Rename parameter arguments, choose names that match
@@ -39,6 +44,15 @@ class FavoriteFragment : Fragment(), OnDictionaryClickListener {
     private var _binding: FragmentFavoriteBinding? = null
     private val binding get() = _binding!!
 
+    private val viewModel by viewModels<DictionaryViewModel> {
+        DictionaryViewModelFactory(
+            DictionaryRepositoryImpl(
+                DictionaryDatabase.getDatabase(requireContext())!!
+                    .wordDao()
+            )
+        )
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -49,14 +63,12 @@ class FavoriteFragment : Fragment(), OnDictionaryClickListener {
         binding.rvWords.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
 
-        val wordList = listOf(
-            Word("hello", null, null, null, "Xin chào"),
-            Word("world", null, null, null, "Thế giới"),
-            Word("apple", null, null, null, "Quả táo"),
-            Word("banana", null, null, null, "Quả chuối")
-        )
+        viewModel.words.observe(viewLifecycleOwner) {
+            val wordAdapter = WordAdapter(it, this)
+            binding.rvWords.adapter = wordAdapter
+        }
 
-        binding.rvWords.adapter = WordAdapter(wordList, this)
+        viewModel.getAllFavoriteWord()
 
         return binding.root
     }
