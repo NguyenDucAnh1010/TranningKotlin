@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ducanh.dictionarydemo.R
 import com.ducanh.dictionarydemo.data.entity.Word
@@ -44,7 +44,7 @@ class DictionaryFragment : Fragment(), OnDictionaryClickListener {
     private var _binding: FragmentDictionaryBinding? = null
     private val binding get() = _binding!!
 
-    private val dictionaryViewModel: DictionaryViewModel by viewModels()
+    private val dictionaryViewModel: DictionaryViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

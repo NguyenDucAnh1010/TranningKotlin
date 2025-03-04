@@ -3,20 +3,20 @@
     <item
         android:id="@+id/dictionaryFragment"
         android:icon="@drawable/ic_dictionary"
-        android:title="@string/dictionary"/>
+        android:title="@string/dictionary" />
 
     <item
         android:id="@+id/favoriteFragment"
         android:icon="@drawable/ic_favorite"
-        android:title="@string/favorite"/>
+        android:title="@string/favorite" />
 
     <item
         android:id="@+id/gameFragment"
         android:icon="@drawable/ic_videogame"
-        android:title="@string/game"/>
+        android:title="@string/game" />
 
     <item
         android:id="@+id/settingsFragment"
         android:icon="@drawable/ic_settings"
-        android:title="@string/settings"/>
+        android:title="@string/settings" />
 </menu>

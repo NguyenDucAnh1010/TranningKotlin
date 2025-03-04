@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="item"
             type="com.ducanh.dictionarydemo.data.entity.Word" />
@@ -35,6 +36,7 @@
             android:layout_marginStart="13dp"
             android:ellipsize="end"
             android:maxLines="1"
+            android:text="@{item.word}"
             android:textAppearance="@style/tv_word"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/btnFavorite"
@@ -42,7 +44,6 @@
             app:layout_constraintStart_toEndOf="@+id/btnSpeak"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0"
-            android:text="@{item.word}"
             tools:text="word" />
 
         <TextView
@@ -53,14 +54,14 @@
             android:maxLines="2"
             android:paddingEnd="15dp"
             android:text="@{item.mean}"
-            tools:text="mean"
             android:textAppearance="@style/tv_mean"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/btnFavorite"
             app:layout_constraintHorizontal_bias="0"
             app:layout_constraintStart_toStartOf="@+id/tvWord"
             app:layout_constraintTop_toBottomOf="@+id/tvWord"
-            app:layout_constraintVertical_bias="0" />
+            app:layout_constraintVertical_bias="0"
+            tools:text="mean" />
 
         <ImageView
             android:id="@+id/btnFavorite"
