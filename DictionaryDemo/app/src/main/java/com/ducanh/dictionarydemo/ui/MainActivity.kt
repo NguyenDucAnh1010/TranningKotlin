@@ -1,5 +1,6 @@
 package com.ducanh.dictionarydemo.ui
 
+import android.app.Activity
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -7,7 +8,6 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import com.ducanh.dictionarydemo.R
-import com.ducanh.dictionarydemo.data.DatabaseHelper
 import com.ducanh.dictionarydemo.databinding.ActivityMainBinding
 import com.ducanh.dictionarydemo.ui.fragment.dictionary.DictionaryFragment
 import com.ducanh.dictionarydemo.ui.fragment.favorite.FavoriteFragment
@@ -33,8 +33,8 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-        val dbHelper = DatabaseHelper(this)
-        dbHelper.copyDatabase()
+//        val dbHelper = DatabaseHelper(this)
+//        dbHelper.copyDatabase()
 
         replaceFragment(DictionaryFragment())
 

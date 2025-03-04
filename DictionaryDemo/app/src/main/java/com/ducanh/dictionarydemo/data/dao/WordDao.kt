@@ -8,11 +8,11 @@ import com.ducanh.dictionarydemo.data.entity.Word
 interface WordDao {
 
     @Query("SELECT * FROM words")
-    suspend fun getAllWord(): List<Word>
+    fun getAllWord(): List<Word>
 
     @Query("SELECT * FROM words WHERE isFavorite = true")
-    suspend fun getAllFavoriteWord(): List<Word>
+    fun getAllFavoriteWord(): List<Word>
 
     @Query("SELECT * FROM words LIMIT :length")
-    suspend fun getWords(length: Int): List<Word>
+    fun getWords(length: Int): List<Word>
 }

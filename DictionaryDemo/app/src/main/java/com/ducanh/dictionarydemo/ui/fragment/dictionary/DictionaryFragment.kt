@@ -5,13 +5,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ducanh.dictionarydemo.R
 import com.ducanh.dictionarydemo.data.entity.Word
 import com.ducanh.dictionarydemo.databinding.FragmentDictionaryBinding
 import com.ducanh.dictionarydemo.ui.adapter.OnDictionaryClickListener
 import com.ducanh.dictionarydemo.ui.fragment.detail.DetailFragment
+import com.ducanh.dictionarydemo.ui.viewmodel.DictionaryViewModel
 import com.example.androidtraining2.ui.adapter.WordAdapter
+import dagger.hilt.android.AndroidEntryPoint
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -23,6 +26,8 @@ private const val ARG_PARAM2 = "param2"
  * Use the [DictionaryFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
+
+@AndroidEntryPoint
 class DictionaryFragment : Fragment(), OnDictionaryClickListener {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
@@ -39,24 +44,22 @@ class DictionaryFragment : Fragment(), OnDictionaryClickListener {
     private var _binding: FragmentDictionaryBinding? = null
     private val binding get() = _binding!!
 
+    private val dictionaryViewModel: DictionaryViewModel by viewModels()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         _binding = FragmentDictionaryBinding.inflate(inflater, container, false)
 
         binding.rvWords.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
 
-        val wordList = listOf(
-            Word("hello", null, null, null, "Xin chào",true),
-            Word("world", null, null, null, "Thế giới"),
-            Word("apple", null, null, null, "Quả táo"),
-            Word("banana", null, null, null, "Quả chuối",true)
-        )
+        dictionaryViewModel.words.observe(viewLifecycleOwner) {
+            binding.rvWords.adapter = WordAdapter(it, this)
+        }
 
-        binding.rvWords.adapter = WordAdapter(wordList, this)
+        dictionaryViewModel.getAllWord()
 
         return binding.root
     }
