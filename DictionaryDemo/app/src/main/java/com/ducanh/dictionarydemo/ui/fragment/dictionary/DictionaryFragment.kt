@@ -1,15 +1,15 @@
 package com.ducanh.dictionarydemo.ui.fragment.dictionary
 
 import android.os.Bundle
+import android.speech.tts.TextToSpeech
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ducanh.dictionarydemo.R
-import com.ducanh.dictionarydemo.data.dao.WordDao
 import com.ducanh.dictionarydemo.data.entity.Word
 import com.ducanh.dictionarydemo.databinding.FragmentDictionaryBinding
 import com.ducanh.dictionarydemo.presentation.repository.DictionaryRepositoryImpl
@@ -19,6 +19,7 @@ import com.ducanh.dictionarydemo.ui.viewmodel.DictionaryViewModel
 import com.ducanh.dictionarydemo.ui.viewmodel.DictionaryViewModelFactory
 import com.example.androidtraining2.data.local.DictionaryDatabase
 import com.example.androidtraining2.ui.adapter.WordAdapter
+import java.util.Locale
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -31,7 +32,7 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 
-class DictionaryFragment : Fragment(), OnDictionaryClickListener {
+class DictionaryFragment : Fragment(), OnDictionaryClickListener, TextToSpeech.OnInitListener {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -47,6 +48,8 @@ class DictionaryFragment : Fragment(), OnDictionaryClickListener {
     private var _binding: FragmentDictionaryBinding? = null
     private val binding get() = _binding!!
     private lateinit var wordAdapter: WordAdapter
+    private var tts: TextToSpeech? = null
+    private var isTtsInitialized = false
 
     private val viewModel by viewModels<DictionaryViewModel> {
         DictionaryViewModelFactory(
@@ -68,11 +71,15 @@ class DictionaryFragment : Fragment(), OnDictionaryClickListener {
 
 
         viewModel.words.observe(viewLifecycleOwner) {
-            wordAdapter = WordAdapter(requireContext(),it, this)
+            wordAdapter = WordAdapter(requireContext(), it, this)
             binding.rvWords.adapter = wordAdapter
         }
 
         viewModel.getAllWord()
+
+        context?.let {
+            tts = TextToSpeech(it, this)
+        }
 
         return binding.root
     }
@@ -90,7 +97,11 @@ class DictionaryFragment : Fragment(), OnDictionaryClickListener {
     }
 
     override fun onSoundClick(word: Word) {
-
+        if (isTtsInitialized) {
+            tts?.speak(word.word, TextToSpeech.QUEUE_ADD, null, null)
+        } else {
+            Log.e("TTS", "TextToSpeech chưa sẵn sàng!")
+        }
     }
 
     override fun onfavouriteClick(word: Word) {
@@ -101,6 +112,26 @@ class DictionaryFragment : Fragment(), OnDictionaryClickListener {
 
     override fun onShareClick(word: Word) {
 
+    }
+
+    override fun onInit(status: Int) {
+        if (status == TextToSpeech.SUCCESS) {
+            val result = tts?.setLanguage(Locale.US)
+
+            if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
+                Log.e("TTS", "Ngôn ngữ không được hỗ trợ!")
+            } else {
+                isTtsInitialized = true
+            }
+        } else {
+            Log.e("TTS", "Khởi tạo TTS thất bại!")
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        tts?.stop()
+        tts?.shutdown()
     }
 
     companion object {

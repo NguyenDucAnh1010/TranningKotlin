@@ -70,6 +70,17 @@ class SettingsFragment : Fragment() {
             }
         })
 
+        var textSize = sharedPref.getFloat("textSize", 1.0f)
+        when(textSize){
+            14f -> binding.rbSmall.isChecked = true
+            19f -> binding.rbNormal.isChecked = true
+            24f -> binding.rbLarge.isChecked = true
+            32f -> binding.rbExtraLarge.isChecked = true
+            else -> binding.rbNormal.isChecked = true
+        }
+
+        binding.tvTestFontSize.textSize = textSize
+
         binding.radioGroup.setOnCheckedChangeListener { _, checkedId ->
             val selectedSize = when (checkedId) {
                 R.id.rbSmall -> 14f
