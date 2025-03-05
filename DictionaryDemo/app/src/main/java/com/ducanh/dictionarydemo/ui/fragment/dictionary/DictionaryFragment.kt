@@ -46,6 +46,7 @@ class DictionaryFragment : Fragment(), OnDictionaryClickListener {
 
     private var _binding: FragmentDictionaryBinding? = null
     private val binding get() = _binding!!
+    private lateinit var wordAdapter: WordAdapter
 
     private val viewModel by viewModels<DictionaryViewModel> {
         DictionaryViewModelFactory(
@@ -67,7 +68,7 @@ class DictionaryFragment : Fragment(), OnDictionaryClickListener {
 
 
         viewModel.words.observe(viewLifecycleOwner) {
-            val wordAdapter = WordAdapter(it, this)
+            wordAdapter = WordAdapter(requireContext(),it, this)
             binding.rvWords.adapter = wordAdapter
         }
 
@@ -93,7 +94,9 @@ class DictionaryFragment : Fragment(), OnDictionaryClickListener {
     }
 
     override fun onfavouriteClick(word: Word) {
-
+        word.isFavorite = true
+        viewModel.updateWord(word)
+        wordAdapter.notifyDataSetChanged()
     }
 
     override fun onShareClick(word: Word) {

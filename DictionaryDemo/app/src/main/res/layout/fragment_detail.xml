@@ -15,14 +15,14 @@
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="0dp">
+            android:layout_height="match_parent">
 
             <TextView
+                style="@style/tv_detail"
                 android:id="@+id/tvAv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:textColor="@color/black" />
+                android:padding="20dp" />
         </androidx.core.widget.NestedScrollView>
     </LinearLayout>
 </layout>

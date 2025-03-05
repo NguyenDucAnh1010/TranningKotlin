@@ -1,5 +1,6 @@
 package com.ducanh.dictionarydemo.ui.fragment.settings
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -41,13 +42,20 @@ class SettingsFragment : Fragment() {
     ): View? {
         _binding = FragmentSettingsBinding.inflate(inflater, container, false)
 
-        var formattedText = getString(R.string.settings_speed, "${0.5f}")
+        var sharedPref =
+            requireContext().getSharedPreferences("AppPreferences", Context.MODE_PRIVATE)
+
+        var speed = sharedPref.getFloat("speed", 1.0f) // Giá trị mặc định là 1.0f nếu chưa có
+        binding.seekBar.progress = (speed * 50).toInt()
+
+        var formattedText = getString(R.string.settings_speed, "${speed}")
         binding.tvSpeed.text = formattedText
 
         binding.seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                val speed = String.format("%.1f", progress / 100.0f) // Giữ 1 số sau dấu chấm
-                formattedText = getString(R.string.settings_speed, "${speed}")
+                speed = progress / 50.0f
+                val speedText = String.format("%.1f", speed)
+                formattedText = getString(R.string.settings_speed, "${speedText}")
                 binding.tvSpeed.text = formattedText
             }
 
@@ -55,8 +63,24 @@ class SettingsFragment : Fragment() {
             }
 
             override fun onStopTrackingTouch(seekBar: SeekBar?) {
+                with(sharedPref.edit()) {
+                    putFloat("speed", speed)
+                    apply()
+                }
             }
         })
+
+        binding.radioGroup.setOnCheckedChangeListener { _, checkedId ->
+            val selectedSize = when (checkedId) {
+                R.id.rbSmall -> 14f
+                R.id.rbNormal -> 19f
+                R.id.rbLarge -> 24f
+                R.id.rbExtraLarge -> 32f
+                else -> 19f
+            }
+            binding.tvTestFontSize.textSize = selectedSize
+            sharedPref.edit().putFloat("textSize", selectedSize).apply()
+        }
 
         return binding.root
     }

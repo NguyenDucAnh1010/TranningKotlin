@@ -1,6 +1,5 @@
 package com.ducanh.dictionarydemo.data.entity
 
-import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import java.io.Serializable
@@ -12,5 +11,6 @@ data class Word(
     val av: ByteArray?,
     val dnpn: ByteArray?,
     val aa: ByteArray?,
-    val mean: String?
+    val mean: String?,
+    var isFavorite: Boolean = false
 ) : Serializable

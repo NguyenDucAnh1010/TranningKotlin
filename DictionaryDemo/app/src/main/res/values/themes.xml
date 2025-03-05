@@ -39,6 +39,11 @@
         <item name="android:textColor">@color/tv_mean</item>
     </style>
 
+    <style name="tv_detail" parent="font_normal">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
     <style name="tv_settings" parent="font_normal">
         <item name="android:textSize">19sp</item>
         <item name="android:textColor">@color/black</item>

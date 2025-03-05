@@ -23,7 +23,14 @@ class DictionaryViewModel(private val repository: DictionaryRepositoryImpl) :
 
     fun getAllFavoriteWord() {
         viewModelScope.launch(Dispatchers.IO) {
-//            _words.postValue(repository.getAllFavoriteWord())
+            _words.postValue(repository.getAllFavoriteWord())
+        }
+    }
+
+    fun updateWord(word: Word) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.updateWord(word)
+            _words.postValue(repository.getAllWord())
         }
     }
 

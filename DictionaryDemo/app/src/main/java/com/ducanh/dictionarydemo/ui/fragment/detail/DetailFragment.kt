@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.view.isVisible
 import com.ducanh.dictionarydemo.R
 import com.ducanh.dictionarydemo.data.entity.Word
 import com.ducanh.dictionarydemo.databinding.FragmentDetailBinding
@@ -57,17 +58,10 @@ class DetailFragment : Fragment() {
         }
 
         val bottomNavigationView = requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView)
-        val menu = bottomNavigationView.menu
-        menu.findItem(R.id.dictionaryFragment).isEnabled = false
-        menu.findItem(R.id.favoriteFragment).isEnabled = false
-        menu.findItem(R.id.gameFragment).isEnabled = false
-        menu.findItem(R.id.settingsFragment).isEnabled = false
+        bottomNavigationView.visibility = View.GONE
 
         binding.customToolBar.ibBack.setOnClickListener {
-            menu.findItem(R.id.dictionaryFragment).isEnabled = true
-            menu.findItem(R.id.favoriteFragment).isEnabled = true
-            menu.findItem(R.id.gameFragment).isEnabled = true
-            menu.findItem(R.id.settingsFragment).isEnabled = true
+            bottomNavigationView.visibility = View.GONE
             parentFragmentManager.popBackStack()
         }
 

@@ -1,7 +1,7 @@
 package com.ducanh.dictionarydemo.ui
 
-import android.app.Activity
 import android.os.Bundle
+import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -51,11 +51,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         super.onBackPressed()
-        val menu = binding.bottomNavigationView.menu
-        menu.findItem(R.id.dictionaryFragment).isEnabled = true
-        menu.findItem(R.id.favoriteFragment).isEnabled = true
-        menu.findItem(R.id.gameFragment).isEnabled = true
-        menu.findItem(R.id.settingsFragment).isEnabled = true
+        binding.bottomNavigationView.visibility = View.VISIBLE
     }
 
     private fun replaceFragment(fragment: Fragment) {
