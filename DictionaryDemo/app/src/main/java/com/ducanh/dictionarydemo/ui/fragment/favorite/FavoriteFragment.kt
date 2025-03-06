@@ -98,6 +98,8 @@ class FavoriteFragment : Fragment(), OnDictionaryClickListener, TextToSpeech.OnI
                             if (it.isEmpty()) {
                                 index -= DISPLAY_LIST
                                 viewModel.getAllFavoriteWord(index)
+                            }else{
+                                binding.rvWords.scrollToPosition(0)
                             }
                         }
                         showLoading(false)
@@ -111,15 +113,17 @@ class FavoriteFragment : Fragment(), OnDictionaryClickListener, TextToSpeech.OnI
                         index -= DISPLAY_LIST
                         if (index < 0) index = 0
                         viewModel.getAllFavoriteWord(index)
+                        binding.rvWords.scrollToPosition(0)
                         showLoading(false)
                     }
                 }
             }
         })
 
+        wordAdapter = WordAdapter(requireContext(), mutableListOf(), this)
+        binding.rvWords.adapter = wordAdapter
         viewModel.words.observe(viewLifecycleOwner) {
-            wordAdapter = WordAdapter(requireContext(), it, this)
-            binding.rvWords.adapter = wordAdapter
+            wordAdapter.updateList(it)
         }
 
         viewModel.getAllFavoriteWord(index)
@@ -167,7 +171,7 @@ class FavoriteFragment : Fragment(), OnDictionaryClickListener, TextToSpeech.OnI
             .setMessage("Are you sure you want to unfavorite this word?\n")
             .setPositiveButton("Yes") { _, _ ->
                 word.isFavorite = false
-                viewModel.updateFavouriteWord(word, index)
+                viewModel.updateFavouriteWord(word)
                 Toast.makeText(requireContext(), "Unfavorite ${word.word} success!", Toast.LENGTH_SHORT).show()
             }
             .setNegativeButton("Cancel", null)

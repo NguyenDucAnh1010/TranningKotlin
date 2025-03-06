@@ -15,6 +15,9 @@ class DictionaryViewModel(private val repository: DictionaryRepositoryImpl) :
     private val _words = MutableLiveData<List<Word>>(listOf())
     val words: LiveData<List<Word>> get() = _words
 
+    private val _searchWords = MutableLiveData<List<Word>>(listOf())
+    val searchWords: LiveData<List<Word>> get() = _searchWords
+
     fun getAllWord(index: Int) {
         viewModelScope.launch(Dispatchers.IO) {
             _words.postValue(repository.getAllWord(index))
@@ -27,25 +30,26 @@ class DictionaryViewModel(private val repository: DictionaryRepositoryImpl) :
         }
     }
 
-    fun updateAllWord(word: Word,index: Int) {
+    fun updateAllWord(word: Word) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.updateWord(word)
-            getAllWord(index)
+            _words.postValue(_words.value?.map { if (it.word == word.word) word else it })
         }
     }
 
-    fun updateFavouriteWord(word: Word,index: Int) {
+
+    fun updateFavouriteWord(word: Word) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.updateWord(word)
-            getAllFavoriteWord(index)
+            _words.postValue(_words.value?.filterNot { it.word == word.word })
         }
     }
 
-//    fun getWords(length: Int) {
-//        viewModelScope.launch(Dispatchers.IO) {
-//            _words.postValue(repository.getWords(length))
-//        }
-//    }
+    fun searchWord(query: String){
+        viewModelScope.launch(Dispatchers.IO) {
+            _searchWords.postValue(repository.searchWord(query))
+        }
+    }
 }
 
 class DictionaryViewModelFactory(

@@ -10,4 +10,5 @@ class DictionaryRepositoryImpl(private val wordDao: WordDao) :
     override suspend fun updateWord(word: Word){
         wordDao.updateWord(word)
     }
+    override suspend fun searchWord(query: String): List<Word> = wordDao.searchWord(query)
 }

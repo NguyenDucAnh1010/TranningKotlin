@@ -9,7 +9,7 @@ import com.ducanh.dictionarydemo.data.entity.Word
 import com.ducanh.dictionarydemo.databinding.ItemWordBinding
 import com.ducanh.dictionarydemo.ui.adapter.OnDictionaryClickListener
 
-class WordAdapter(private val context: Context, private val items: List<Word>, private val listener: OnDictionaryClickListener) :
+class WordAdapter(private val context: Context, private var items: MutableList<Word>, private val listener: OnDictionaryClickListener) :
     RecyclerView.Adapter<WordAdapter.ViewHolder>() {
     class ViewHolder(var binding: ItemWordBinding) : RecyclerView.ViewHolder(binding.root)
 
@@ -21,6 +21,29 @@ class WordAdapter(private val context: Context, private val items: List<Word>, p
                 false
             )
         )
+    }
+
+    fun updateList(newItems: List<Word>) {
+        items.clear()
+        items.addAll(newItems)
+        notifyDataSetChanged()
+    }
+
+    fun updateWord(word: Word) {
+        val index = items.indexOfFirst { it.word == word.word }
+        if (index != -1) {
+            items[index] = word
+            notifyItemChanged(index) // Chỉ cập nhật một item
+        }
+    }
+
+    fun removeItem(word: Word) {
+        val position = items.indexOfFirst { it.word == word.word }
+        if (position != -1) {
+            items.removeAt(position)
+            notifyItemRemoved(position)
+            notifyItemRangeChanged(position, items.size)
+        }
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -48,6 +71,7 @@ class WordAdapter(private val context: Context, private val items: List<Word>, p
 
         holder.binding.btnFavorite.setOnClickListener {
             listener.onfavouriteClick(item)
+            notifyItemChanged(position)
         }
 
         holder.binding.btnShare.setOnClickListener {

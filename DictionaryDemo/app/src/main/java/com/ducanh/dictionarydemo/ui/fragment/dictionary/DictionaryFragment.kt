@@ -5,11 +5,14 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.speech.tts.TextToSpeech
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -57,6 +60,7 @@ class DictionaryFragment : Fragment(), OnDictionaryClickListener, TextToSpeech.O
     private var _binding: FragmentDictionaryBinding? = null
     private val binding get() = _binding!!
     private lateinit var wordAdapter: WordAdapter
+    private lateinit var wordSearchAdapter: WordAdapter
     private var tts: TextToSpeech? = null
     private var isTtsInitialized = false
 
@@ -77,7 +81,26 @@ class DictionaryFragment : Fragment(), OnDictionaryClickListener, TextToSpeech.O
     ): View? {
         _binding = FragmentDictionaryBinding.inflate(inflater, container, false)
 
+        binding.etSearch.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                if (s.toString().count()>0){
+                    binding.rvSearchWords.visibility = View.VISIBLE
+                    binding.rvWords.visibility = View.INVISIBLE
+                    viewModel.searchWord(s.toString())
+                }else{
+                    binding.rvSearchWords.visibility = View.INVISIBLE
+                    binding.rvWords.visibility = View.VISIBLE
+                }
+            }
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+        })
+
         binding.rvWords.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+
+        binding.rvSearchWords.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
 
         binding.rvWords.addOnScrollListener(object : RecyclerView.OnScrollListener() {
@@ -99,6 +122,8 @@ class DictionaryFragment : Fragment(), OnDictionaryClickListener, TextToSpeech.O
                             if (it.isEmpty()) {
                                 index -= DISPLAY_LIST
                                 viewModel.getAllWord(index)
+                            }else{
+                                binding.rvWords.scrollToPosition(0)
                             }
                         }
                         showLoading(false)
@@ -112,15 +137,23 @@ class DictionaryFragment : Fragment(), OnDictionaryClickListener, TextToSpeech.O
                         index -= DISPLAY_LIST
                         if (index < 0) index = 0
                         viewModel.getAllWord(index)
+                        binding.rvWords.scrollToPosition(0)
                         showLoading(false)
                     }
                 }
             }
         })
 
+        wordAdapter = WordAdapter(requireContext(), mutableListOf(), this)
+        binding.rvWords.adapter = wordAdapter
         viewModel.words.observe(viewLifecycleOwner) {
-            wordAdapter = WordAdapter(requireContext(), it, this)
-            binding.rvWords.adapter = wordAdapter
+            wordAdapter.updateList(it)
+        }
+
+        wordSearchAdapter = WordAdapter(requireContext(), mutableListOf(), this)
+        binding.rvSearchWords.adapter = wordSearchAdapter
+        viewModel.searchWords.observe(viewLifecycleOwner){
+            wordSearchAdapter.updateList(it)
         }
 
         viewModel.getAllWord(index)
@@ -169,14 +202,20 @@ class DictionaryFragment : Fragment(), OnDictionaryClickListener, TextToSpeech.O
                 .setMessage("Are you sure you want to unfavorite this word?\n")
                 .setPositiveButton("Yes") { _, _ ->
                     word.isFavorite = false
-                    viewModel.updateAllWord(word, index)
+                    viewModel.words.observe(viewLifecycleOwner) {
+                        wordAdapter.updateWord(word)
+                    }
+                    viewModel.updateAllWord(word)
                     Toast.makeText(requireContext(), "Unfavorite ${word.word} success!", Toast.LENGTH_SHORT).show()
                 }
                 .setNegativeButton("Cancel", null)
                 .show()
         }else{
             word.isFavorite = true
-            viewModel.updateAllWord(word, index)
+            viewModel.words.observe(viewLifecycleOwner) {
+                wordAdapter.updateWord(word)
+            }
+            viewModel.updateAllWord(word)
             Toast.makeText(requireContext(), "Added ${word.word} to favorites success!", Toast.LENGTH_SHORT).show()
         }
     }
