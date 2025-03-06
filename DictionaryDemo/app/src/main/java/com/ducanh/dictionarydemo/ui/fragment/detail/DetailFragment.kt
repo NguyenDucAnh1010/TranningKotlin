@@ -1,9 +1,12 @@
 package com.ducanh.dictionarydemo.ui.fragment.detail
 
+import android.content.Context
 import android.os.Build
 import android.os.Bundle
+import android.speech.tts.TextToSpeech
 import android.text.Html
 import android.text.Spanned
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -15,6 +18,7 @@ import com.ducanh.dictionarydemo.data.entity.Word
 import com.ducanh.dictionarydemo.databinding.FragmentDetailBinding
 import com.ducanh.dictionarydemo.databinding.FragmentDictionaryBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import java.util.Locale
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -26,7 +30,7 @@ private const val ARG_PARAM2 = "param2"
  * Use the [DetailFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class DetailFragment : Fragment() {
+class DetailFragment : Fragment(), TextToSpeech.OnInitListener {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -41,12 +45,13 @@ class DetailFragment : Fragment() {
 
     private var _binding: FragmentDetailBinding? = null
     private val binding get() = _binding!!
+    private var tts: TextToSpeech? = null
+    private var isTtsInitialized = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         _binding = FragmentDetailBinding.inflate(inflater, container, false)
 
         val word = arguments?.getSerializable("word") as? Word
@@ -57,11 +62,29 @@ class DetailFragment : Fragment() {
             }
         }
 
+        var sharedPref =
+            requireContext().getSharedPreferences("AppPreferences", Context.MODE_PRIVATE)
+
+        var speed = sharedPref.getFloat("speed", 1.0f)
+
+        context?.let {
+            tts = TextToSpeech(it, this)
+            tts?.setPitch(speed)
+        }
+
+        binding.customToolBar.ibSound.setOnClickListener {
+            if (isTtsInitialized) {
+                tts?.speak("Fuck Your Mother", TextToSpeech.QUEUE_ADD, null, null)
+            } else {
+                Log.e("TTS", "TextToSpeech chưa sẵn sàng!")
+            }
+        }
+
         val bottomNavigationView = requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView)
         bottomNavigationView.visibility = View.GONE
 
         binding.customToolBar.ibBack.setOnClickListener {
-            bottomNavigationView.visibility = View.GONE
+            bottomNavigationView.visibility = View.VISIBLE
             parentFragmentManager.popBackStack()
         }
 
@@ -76,6 +99,26 @@ class DetailFragment : Fragment() {
             Html.fromHtml(htmlString)
         }
         textView.text = spanned
+    }
+
+    override fun onInit(status: Int) {
+        if (status == TextToSpeech.SUCCESS) {
+            val result = tts?.setLanguage(Locale.US)
+
+            if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
+                Log.e("TTS", "Ngôn ngữ không được hỗ trợ!")
+            } else {
+                isTtsInitialized = true
+            }
+        } else {
+            Log.e("TTS", "Khởi tạo TTS thất bại!")
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        tts?.stop()
+        tts?.shutdown()
     }
 
     companion object {

@@ -1,10 +1,10 @@
 package com.ducanh.dictionarydemo.presentation.repository
 
+import androidx.lifecycle.LiveData
 import com.ducanh.dictionarydemo.data.entity.Word
 
 interface DictionaryRepository {
-    fun getAllWord(): List<Word>
-    fun getAllFavoriteWord(): List<Word>
-    fun updateWord(word: Word)
-//    fun getWords(length: Int): List<Word>
+    suspend fun getAllWord(index: Int): List<Word>
+    suspend fun getAllFavoriteWord(index: Int): List<Word>
+    suspend fun updateWord(word: Word)
 }

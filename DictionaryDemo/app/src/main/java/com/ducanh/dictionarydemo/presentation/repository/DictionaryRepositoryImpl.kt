@@ -5,10 +5,9 @@ import com.ducanh.dictionarydemo.data.entity.Word
 
 class DictionaryRepositoryImpl(private val wordDao: WordDao) :
     DictionaryRepository {
-    override fun getAllWord(): List<Word> = wordDao.getAllWord()
-    override fun getAllFavoriteWord(): List<Word> = wordDao.getAllFavoriteWord()
-    override fun updateWord(word: Word){
+    override suspend fun getAllWord(index: Int): List<Word> = wordDao.getAllWord(index)
+    override suspend fun getAllFavoriteWord(index: Int): List<Word> = wordDao.getAllFavoriteWord(index)
+    override suspend fun updateWord(word: Word){
         wordDao.updateWord(word)
     }
-//    override fun getWords(length: Int): List<Word> = wordDao.getWords(length)
 }

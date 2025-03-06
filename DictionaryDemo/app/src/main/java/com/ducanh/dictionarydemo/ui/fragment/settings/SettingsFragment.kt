@@ -1,7 +1,10 @@
 package com.ducanh.dictionarydemo.ui.fragment.settings
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
+import android.speech.tts.TextToSpeech
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +12,7 @@ import android.widget.SeekBar
 import androidx.fragment.app.Fragment
 import com.ducanh.dictionarydemo.R
 import com.ducanh.dictionarydemo.databinding.FragmentSettingsBinding
+import java.util.Locale
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -20,7 +24,7 @@ private const val ARG_PARAM2 = "param2"
  * Use the [SettingsFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class SettingsFragment : Fragment() {
+class SettingsFragment : Fragment(), TextToSpeech.OnInitListener {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -35,6 +39,8 @@ class SettingsFragment : Fragment() {
 
     private var _binding: FragmentSettingsBinding? = null
     private val binding get() = _binding!!
+    private var tts: TextToSpeech? = null
+    private var isTtsInitialized = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,7 +51,7 @@ class SettingsFragment : Fragment() {
         var sharedPref =
             requireContext().getSharedPreferences("AppPreferences", Context.MODE_PRIVATE)
 
-        var speed = sharedPref.getFloat("speed", 1.0f) // Giá trị mặc định là 1.0f nếu chưa có
+        var speed = sharedPref.getFloat("speed", 1.0f)
         binding.seekBar.progress = (speed * 50).toInt()
 
         var formattedText = getString(R.string.settings_speed, "${speed}")
@@ -70,6 +76,19 @@ class SettingsFragment : Fragment() {
             }
         })
 
+        context?.let {
+            tts = TextToSpeech(it, this)
+            tts?.setPitch(speed)
+        }
+
+        binding.btnTestSound.setOnClickListener {
+            if (isTtsInitialized) {
+                tts?.speak("Fuck Your Mother", TextToSpeech.QUEUE_ADD, null, null)
+            } else {
+                Log.e("TTS", "TextToSpeech chưa sẵn sàng!")
+            }
+        }
+
         var textSize = sharedPref.getFloat("textSize", 1.0f)
         when(textSize){
             14f -> binding.rbSmall.isChecked = true
@@ -93,7 +112,39 @@ class SettingsFragment : Fragment() {
             sharedPref.edit().putFloat("textSize", selectedSize).apply()
         }
 
+        binding.btnShare.setOnClickListener {
+            shareText(requireContext(),"https://app.slack.com/client/T05QVLHPLVB/D08F46489B5")
+        }
+
         return binding.root
+    }
+
+    override fun onInit(status: Int) {
+        if (status == TextToSpeech.SUCCESS) {
+            val result = tts?.setLanguage(Locale.US)
+
+            if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
+                Log.e("TTS", "Ngôn ngữ không được hỗ trợ!")
+            } else {
+                isTtsInitialized = true
+            }
+        } else {
+            Log.e("TTS", "Khởi tạo TTS thất bại!")
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        tts?.stop()
+        tts?.shutdown()
+    }
+
+    fun shareText(context: Context, text: String) {
+        val intent = Intent(Intent.ACTION_SEND)
+        intent.type = "text/plain"
+        intent.putExtra(Intent.EXTRA_TEXT, text)
+
+        context.startActivity(Intent.createChooser(intent, "Chia sẻ từ vựng"))
     }
 
     companion object {

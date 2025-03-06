@@ -15,22 +15,29 @@ class DictionaryViewModel(private val repository: DictionaryRepositoryImpl) :
     private val _words = MutableLiveData<List<Word>>(listOf())
     val words: LiveData<List<Word>> get() = _words
 
-    fun getAllWord() {
+    fun getAllWord(index: Int) {
         viewModelScope.launch(Dispatchers.IO) {
-            _words.postValue(repository.getAllWord())
+            _words.postValue(repository.getAllWord(index))
         }
     }
 
-    fun getAllFavoriteWord() {
+    fun getAllFavoriteWord(index: Int) {
         viewModelScope.launch(Dispatchers.IO) {
-            _words.postValue(repository.getAllFavoriteWord())
+            _words.postValue(repository.getAllFavoriteWord(index))
         }
     }
 
-    fun updateWord(word: Word) {
+    fun updateAllWord(word: Word,index: Int) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.updateWord(word)
-            _words.postValue(repository.getAllWord())
+            getAllWord(index)
+        }
+    }
+
+    fun updateFavouriteWord(word: Word,index: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.updateWord(word)
+            getAllFavoriteWord(index)
         }
     }
 
