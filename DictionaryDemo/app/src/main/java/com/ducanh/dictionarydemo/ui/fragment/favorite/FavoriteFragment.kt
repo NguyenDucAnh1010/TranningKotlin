@@ -98,7 +98,7 @@ class FavoriteFragment : Fragment(), OnDictionaryClickListener, TextToSpeech.OnI
                             if (it.isEmpty()) {
                                 index -= DISPLAY_LIST
                                 viewModel.getAllFavoriteWord(index)
-                            }else{
+                            } else {
                                 binding.rvWords.scrollToPosition(0)
                             }
                         }
@@ -172,7 +172,11 @@ class FavoriteFragment : Fragment(), OnDictionaryClickListener, TextToSpeech.OnI
             .setPositiveButton("Yes") { _, _ ->
                 word.isFavorite = false
                 viewModel.updateFavouriteWord(word)
-                Toast.makeText(requireContext(), "Unfavorite ${word.word} success!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    requireContext(),
+                    "Unfavorite ${word.word} success!",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
             .setNegativeButton("Cancel", null)
             .show()

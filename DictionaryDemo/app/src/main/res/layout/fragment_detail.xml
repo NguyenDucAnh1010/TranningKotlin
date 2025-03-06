@@ -18,8 +18,8 @@
             android:layout_height="match_parent">
 
             <TextView
-                style="@style/tv_detail"
                 android:id="@+id/tvAv"
+                style="@style/tv_detail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="20dp" />

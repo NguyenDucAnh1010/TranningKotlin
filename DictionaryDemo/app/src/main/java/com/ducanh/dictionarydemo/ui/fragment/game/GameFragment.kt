@@ -1,10 +1,10 @@
 package com.ducanh.dictionarydemo.ui.fragment.game
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import com.ducanh.dictionarydemo.R
 
 // TODO: Rename parameter arguments, choose names that match

@@ -1,6 +1,5 @@
 package com.ducanh.dictionarydemo.presentation.repository
 
-import androidx.lifecycle.LiveData
 import com.ducanh.dictionarydemo.data.entity.Word
 
 interface DictionaryRepository {

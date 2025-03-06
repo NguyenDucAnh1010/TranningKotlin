@@ -7,16 +7,14 @@ import android.speech.tts.TextToSpeech
 import android.text.Html
 import android.text.Spanned
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import com.ducanh.dictionarydemo.R
 import com.ducanh.dictionarydemo.data.entity.Word
 import com.ducanh.dictionarydemo.databinding.FragmentDetailBinding
-import com.ducanh.dictionarydemo.databinding.FragmentDictionaryBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import java.util.Locale
 
@@ -58,7 +56,7 @@ class DetailFragment : Fragment(), TextToSpeech.OnInitListener {
         word?.let {
             binding.customToolBar.tvWord.text = word.word
             word.av?.let {
-                setHtmlText(binding.tvAv,word.av)
+                setHtmlText(binding.tvAv, word.av)
             }
         }
 
@@ -80,7 +78,8 @@ class DetailFragment : Fragment(), TextToSpeech.OnInitListener {
             }
         }
 
-        val bottomNavigationView = requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView)
+        val bottomNavigationView =
+            requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView)
         bottomNavigationView.visibility = View.GONE
 
         binding.customToolBar.ibBack.setOnClickListener {

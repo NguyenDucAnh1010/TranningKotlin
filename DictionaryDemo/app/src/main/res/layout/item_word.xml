@@ -16,8 +16,8 @@
         android:layout_marginHorizontal="10dp"
         android:layout_marginVertical="5dp"
         android:background="@drawable/custom_view_item_word"
-        android:paddingVertical="10dp"
-        android:paddingHorizontal="20dp">
+        android:paddingHorizontal="20dp"
+        android:paddingVertical="10dp">
 
         <ImageView
             android:id="@+id/btnSpeak"

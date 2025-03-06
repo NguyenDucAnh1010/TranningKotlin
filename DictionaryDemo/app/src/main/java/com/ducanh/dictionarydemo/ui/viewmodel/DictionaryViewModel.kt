@@ -45,7 +45,7 @@ class DictionaryViewModel(private val repository: DictionaryRepositoryImpl) :
         }
     }
 
-    fun searchWord(query: String){
+    fun searchWord(query: String) {
         viewModelScope.launch(Dispatchers.IO) {
             _searchWords.postValue(repository.searchWord(query))
         }

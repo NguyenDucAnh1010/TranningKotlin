@@ -9,7 +9,11 @@ import com.ducanh.dictionarydemo.data.entity.Word
 import com.ducanh.dictionarydemo.databinding.ItemWordBinding
 import com.ducanh.dictionarydemo.ui.adapter.OnDictionaryClickListener
 
-class WordAdapter(private val context: Context, private var items: MutableList<Word>, private val listener: OnDictionaryClickListener) :
+class WordAdapter(
+    private val context: Context,
+    private var items: MutableList<Word>,
+    private val listener: OnDictionaryClickListener
+) :
     RecyclerView.Adapter<WordAdapter.ViewHolder>() {
     class ViewHolder(var binding: ItemWordBinding) : RecyclerView.ViewHolder(binding.root)
 
@@ -57,7 +61,7 @@ class WordAdapter(private val context: Context, private var items: MutableList<W
         holder.binding.tvWord.textSize = textSize
         holder.binding.tvMean.textSize = textSize
 
-        if (item.isFavorite){
+        if (item.isFavorite) {
             holder.binding.btnFavorite.setImageResource(R.drawable.ic_select_favorite)
         }
 

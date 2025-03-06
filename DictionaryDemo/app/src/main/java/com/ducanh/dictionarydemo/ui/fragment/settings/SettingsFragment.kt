@@ -90,7 +90,7 @@ class SettingsFragment : Fragment(), TextToSpeech.OnInitListener {
         }
 
         var textSize = sharedPref.getFloat("textSize", 1.0f)
-        when(textSize){
+        when (textSize) {
             14f -> binding.rbSmall.isChecked = true
             19f -> binding.rbNormal.isChecked = true
             24f -> binding.rbLarge.isChecked = true
@@ -113,7 +113,7 @@ class SettingsFragment : Fragment(), TextToSpeech.OnInitListener {
         }
 
         binding.btnShare.setOnClickListener {
-            shareText(requireContext(),"https://app.slack.com/client/T05QVLHPLVB/D08F46489B5")
+            shareText(requireContext(), "https://app.slack.com/client/T05QVLHPLVB/D08F46489B5")
         }
 
         return binding.root

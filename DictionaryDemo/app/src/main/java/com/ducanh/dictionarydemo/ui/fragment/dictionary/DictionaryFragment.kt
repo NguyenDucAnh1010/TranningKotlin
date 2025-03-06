@@ -12,7 +12,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -83,15 +82,16 @@ class DictionaryFragment : Fragment(), OnDictionaryClickListener, TextToSpeech.O
 
         binding.etSearch.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
-                if (s.toString().count()>0){
+                if (s.toString().count() > 0) {
                     binding.rvSearchWords.visibility = View.VISIBLE
                     binding.rvWords.visibility = View.INVISIBLE
                     viewModel.searchWord(s.toString())
-                }else{
+                } else {
                     binding.rvSearchWords.visibility = View.INVISIBLE
                     binding.rvWords.visibility = View.VISIBLE
                 }
             }
+
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
             }
@@ -112,7 +112,7 @@ class DictionaryFragment : Fragment(), OnDictionaryClickListener, TextToSpeech.O
                 val lastVisibleItem = layoutManager.findLastVisibleItemPosition()
                 val firstVisibleItem = layoutManager.findFirstVisibleItemPosition()
 
-                if (dy > 0 && lastVisibleItem >= totalItemCount - 2  && totalItemCount >= DISPLAY_LIST) {
+                if (dy > 0 && lastVisibleItem >= totalItemCount - 2 && totalItemCount >= DISPLAY_LIST) {
                     lifecycleScope.launch {
                         showLoading(true)
                         delay(1500)
@@ -122,7 +122,7 @@ class DictionaryFragment : Fragment(), OnDictionaryClickListener, TextToSpeech.O
                             if (it.isEmpty()) {
                                 index -= DISPLAY_LIST
                                 viewModel.getAllWord(index)
-                            }else{
+                            } else {
                                 binding.rvWords.scrollToPosition(0)
                             }
                         }
@@ -152,7 +152,7 @@ class DictionaryFragment : Fragment(), OnDictionaryClickListener, TextToSpeech.O
 
         wordSearchAdapter = WordAdapter(requireContext(), mutableListOf(), this)
         binding.rvSearchWords.adapter = wordSearchAdapter
-        viewModel.searchWords.observe(viewLifecycleOwner){
+        viewModel.searchWords.observe(viewLifecycleOwner) {
             wordSearchAdapter.updateList(it)
         }
 
@@ -196,7 +196,7 @@ class DictionaryFragment : Fragment(), OnDictionaryClickListener, TextToSpeech.O
     }
 
     override fun onfavouriteClick(word: Word) {
-        if (word.isFavorite){
+        if (word.isFavorite) {
             AlertDialog.Builder(requireContext())
                 .setTitle("Confirm")
                 .setMessage("Are you sure you want to unfavorite this word?\n")
@@ -206,17 +206,25 @@ class DictionaryFragment : Fragment(), OnDictionaryClickListener, TextToSpeech.O
                         wordAdapter.updateWord(word)
                     }
                     viewModel.updateAllWord(word)
-                    Toast.makeText(requireContext(), "Unfavorite ${word.word} success!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        requireContext(),
+                        "Unfavorite ${word.word} success!",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
                 .setNegativeButton("Cancel", null)
                 .show()
-        }else{
+        } else {
             word.isFavorite = true
             viewModel.words.observe(viewLifecycleOwner) {
                 wordAdapter.updateWord(word)
             }
             viewModel.updateAllWord(word)
-            Toast.makeText(requireContext(), "Added ${word.word} to favorites success!", Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                requireContext(),
+                "Added ${word.word} to favorites success!",
+                Toast.LENGTH_SHORT
+            ).show()
         }
     }
 

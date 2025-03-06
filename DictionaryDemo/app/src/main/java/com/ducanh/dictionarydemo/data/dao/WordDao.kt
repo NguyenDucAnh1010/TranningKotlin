@@ -1,6 +1,5 @@
 package com.ducanh.dictionarydemo.data.dao
 
-import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Update
