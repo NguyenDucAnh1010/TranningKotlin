@@ -6,11 +6,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.ducanh.dictionarydemo.data.entity.Word
+import com.ducanh.dictionarydemo.presentation.repository.DictionaryRepository
 import com.ducanh.dictionarydemo.presentation.repository.DictionaryRepositoryImpl
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class DictionaryViewModel(private val repository: DictionaryRepositoryImpl) :
+class DictionaryViewModel(private val repository: DictionaryRepository) :
     ViewModel() {
     private val _words = MutableLiveData<List<Word>>(listOf())
     val words: LiveData<List<Word>> get() = _words
@@ -53,7 +54,7 @@ class DictionaryViewModel(private val repository: DictionaryRepositoryImpl) :
 }
 
 class DictionaryViewModelFactory(
-    private val repository: DictionaryRepositoryImpl
+    private val repository: DictionaryRepository
 ) : ViewModelProvider.NewInstanceFactory() {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return DictionaryViewModel(repository) as T
