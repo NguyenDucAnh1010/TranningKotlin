@@ -98,9 +98,10 @@ class DictionaryFragment : Fragment(), OnDictionaryClickListener, TextToSpeech.O
 
                         viewModel.words.observeForever {
                             if (it.size >= prevSize) {
-                                wordAdapter.notifyItemRangeInserted(prevSize, index+1)
+                                wordAdapter.notifyItemRangeInserted(prevSize, index + 1)
                             } else {
                                 index -= DISPLAY_LIST
+                                wordAdapter.notifyItemRangeInserted(prevSize, prevSize - 1)
                             }
                         }
                         showLoading(false)
