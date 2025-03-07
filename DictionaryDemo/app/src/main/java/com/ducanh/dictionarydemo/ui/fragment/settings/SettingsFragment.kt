@@ -26,7 +26,7 @@ class SettingsFragment : Fragment(), TextToSpeech.OnInitListener {
     ): View? {
         _binding = FragmentSettingsBinding.inflate(inflater, container, false)
 
-        var sharedPref =
+        val sharedPref =
             requireContext().getSharedPreferences("AppPreferences", Context.MODE_PRIVATE)
 
         var speed = sharedPref.getFloat("speed", 1.0f)
