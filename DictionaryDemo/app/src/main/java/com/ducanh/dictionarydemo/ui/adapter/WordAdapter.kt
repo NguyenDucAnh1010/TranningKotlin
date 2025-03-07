@@ -37,7 +37,7 @@ class WordAdapter(
         val index = items.indexOfFirst { it.word == word.word }
         if (index != -1) {
             items[index] = word
-            notifyItemChanged(index) // Chỉ cập nhật một item
+            notifyItemChanged(index)
         }
     }
 
@@ -63,6 +63,8 @@ class WordAdapter(
 
         if (item.isFavorite) {
             holder.binding.btnFavorite.setImageResource(R.drawable.ic_select_favorite)
+        }else{
+            holder.binding.btnFavorite.setImageResource(R.drawable.ic_unselect_favorite)
         }
 
         holder.itemView.setOnClickListener {

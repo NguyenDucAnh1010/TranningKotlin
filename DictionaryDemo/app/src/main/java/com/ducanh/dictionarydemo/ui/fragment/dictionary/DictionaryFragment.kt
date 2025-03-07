@@ -87,34 +87,22 @@ class DictionaryFragment : Fragment(), OnDictionaryClickListener, TextToSpeech.O
                 val layoutManager = recyclerView.layoutManager as LinearLayoutManager
                 val totalItemCount = layoutManager.itemCount
                 val lastVisibleItem = layoutManager.findLastVisibleItemPosition()
-                val firstVisibleItem = layoutManager.findFirstVisibleItemPosition()
 
-                if (dy > 0 && lastVisibleItem >= totalItemCount - 2 && totalItemCount >= DISPLAY_LIST) {
+                if (dy > 0 && lastVisibleItem >= totalItemCount - 1 && totalItemCount >= DISPLAY_LIST) {
                     lifecycleScope.launch {
                         showLoading(true)
-                        delay(1500)
+                        delay(1000)
                         index += DISPLAY_LIST
+                        val prevSize = viewModel.words.value?.size ?: 0
                         viewModel.getAllWord(index)
-                        viewModel.words.value?.let {
-                            if (it.isEmpty()) {
-                                index -= DISPLAY_LIST
-                                viewModel.getAllWord(index)
+
+                        viewModel.words.observeForever {
+                            if (it.size >= prevSize) {
+                                wordAdapter.notifyItemRangeInserted(prevSize, index+1)
                             } else {
-                                binding.rvWords.scrollToPosition(0)
+                                index -= DISPLAY_LIST
                             }
                         }
-                        showLoading(false)
-                    }
-                }
-
-                if (dy < 0 && firstVisibleItem <= 2 && index > 0) {
-                    lifecycleScope.launch {
-                        showLoading(true)
-                        delay(1500)
-                        index -= DISPLAY_LIST
-                        if (index < 0) index = 0
-                        viewModel.getAllWord(index)
-                        binding.rvWords.scrollToPosition(0)
                         showLoading(false)
                     }
                 }

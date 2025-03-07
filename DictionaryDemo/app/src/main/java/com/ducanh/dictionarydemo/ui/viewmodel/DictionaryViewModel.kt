@@ -21,13 +21,23 @@ class DictionaryViewModel(private val repository: DictionaryRepository) :
 
     fun getAllWord(index: Int) {
         viewModelScope.launch(Dispatchers.IO) {
-            _words.postValue(repository.getAllWord(index))
+            val newWords = repository.getAllWord(index)
+            val currentWords = _words.value.orEmpty()
+
+            val mergedWords = (currentWords + newWords).distinctBy { it.word }
+
+            _words.postValue(mergedWords)
         }
     }
 
     fun getAllFavoriteWord(index: Int) {
         viewModelScope.launch(Dispatchers.IO) {
-            _words.postValue(repository.getAllFavoriteWord(index))
+            val newWords = repository.getAllFavoriteWord(index)
+            val currentWords = _words.value.orEmpty()
+
+            val mergedWords = (currentWords + newWords).distinctBy { it.word }
+
+            _words.postValue(mergedWords)
         }
     }
 
